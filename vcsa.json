@@ -1,0 +1,44 @@
+{
+    "__version": "2.13.0",
+    "new_vcsa": {
+        "vc": {
+            "hostname": "10.114.221.142",
+            "username": "administrator@ft.lab",
+            "password": "VMware1!",
+            "deployment_network": "Management",
+            "datastore": "dl36-ssd2",
+            "datacenter": "Datacenter",
+            "target": [ "Management" ]
+        },
+        "appliance": {
+            "thin_disk_mode": true,
+            "deployment_option": "small",
+            "name": "vcsa"
+        },
+        "network": {
+            "ip_family": "ipv4",
+            "mode": "static",
+            "ip" : "10.114.221.141",
+            "dns_servers": [
+                "10.114.221.134"
+            ],
+            "prefix": "27",
+            "gateway": "10.114.221.129",
+            "system_name": "10.114.221.141"
+        },
+        "os": {
+            "password": "VMware1!",
+            "ntp_servers": "ntp1.eng.vmware.com",
+            "ssh_enable": true
+        },
+        "sso": {
+            "password": "VMware1!",
+            "domain_name": "ft.lab"
+        }
+    },
+    "ceip": {
+        "settings": {
+            "ceip_enabled": true
+        }
+    }
+}

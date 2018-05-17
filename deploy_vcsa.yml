@@ -1,0 +1,29 @@
+---
+- name: Deploy a VCSA
+  hosts: localhost
+  gather_facts: False
+  tasks:
+    - name: deploy vCenter Server Appliance
+      deploy_vcsa:
+        path_to_ova: "{{ hostvars['localhost'].nsxOvaPath }}"
+        ova_file: "{{ hostvars['localhost'].vcsaOva }}"
+        vcsa_deploy: "{{ hostvars[item]['vcsa_deploy'] }}"
+        vcenter: "{{ hostvars['localhost'].deployVcIPAddress }}"
+        vcenter_user: "{{ hostvars['localhost'].deployVcUser }}"
+        vcenter_passwd: "{{ hostvars['localhost'].deployVcPassword }}"
+        portgroup: "{{ hostvars[item]['portgroup'] }}"
+        datastore: "{{ hostvars[item]['datastore'] }}"
+        datacenter: "{{ hostvars[item]['dc'] }}"
+        cluster: "{{ hostvars[item]['cluster'] }}"
+        vmname: "{{ item }}"
+        ip_address: "{{ hostvars[item].ansible_ssh_host }}"
+        dns_server: "{{ hostvars['localhost'].dns_server }}"
+        prefix: "{{ hostvars[item]['prefix'] }}"
+        gateway: "{{ hostvars[item]['gw'] }}"
+        admin_password: "{{ hostvars[item].ansible_ssh_pass }}"
+        ntp_server: "{{ hostvars['localhost'].ntp_server }}"
+        dns_domain: "{{ hostvars['localhost'].dns_domain }}"
+        site: "{{ hostvars[item]['siteName'] }}"
+      with_items: "{{ groups['vcsas'] }}"
+      register: deploy_vcsa
+ 

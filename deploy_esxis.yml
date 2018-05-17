@@ -1,0 +1,34 @@
+---
+- name: Deploy ESXi OVAs
+  hosts: localhost
+  gather_facts: False
+  tasks:
+    - name: deploy ESXis
+      deploy_esxi:
+        ova_type: esxi
+        ovftool_path: "{{ hostvars['localhost'].ovfToolPath }}"
+        datacenter: "{{ hostvars[item]['dc'] }}"
+        datastore: "{{ hostvars[item]['datastore'] }}"
+        portgroup: "{{ hostvars[item]['portgroup'] }}"
+        portgroup_transport: "{{ hostvars[item]['portgroup_transport'] }}"
+        cluster: "{{ hostvars[item]['cluster'] }}"
+        vmname: "{{ item }}"
+        hostname: "{{ hostvars[item]['hostname'] }}"
+        dns_server: "{{ hostvars['localhost'].dns_server }}"
+        dns_domain: "{{ hostvars['localhost'].dns_domain }}"
+        ntp_server: "{{ hostvars['localhost'].ntp_server }}"
+        gateway: "{{ hostvars[item]['gw'] }}"
+        ip_address: "{{ hostvars[item].ansible_ssh_host }}"
+        netmask: "{{ hostvars[item]['mask'] }}"
+        admin_password: "{{ hostvars[item].ansible_ssh_pass }}"
+        cli_password: "{{ hostvars[item].ansible_ssh_pass }}"
+        ssh_enabled: "{{ hostvars['localhost'].sshEnabled }}"
+        allow_ssh_root_login: "{{ hostvars['localhost'].allowSSHRootAccess }}"
+        path_to_ova: "{{ hostvars['localhost'].nsxOvaPath }}"
+        ova_file: "{{ hostvars['localhost'].esxiOva }}"
+        vcenter: "{{ hostvars['localhost'].deployVcIPAddress }}"
+        vcenter_user: "{{ hostvars['localhost'].deployVcUser }}"
+        vcenter_passwd: "{{ hostvars['localhost'].deployVcPassword }}"
+      with_items: "{{ groups['esxis'] }}"
+      register: deploy_esxis
+ 

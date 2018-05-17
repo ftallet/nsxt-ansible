@@ -1,0 +1,100 @@
+[localhost]
+localhost ansible_connection=local
+
+[nsxmanagers]
+nsx-manager ansible_ssh_host=10.114.221.140 ansible_ssh_user=root ansible_ssh_pass=VMware1! dc=Datacenter cluster=Management datastore=dl36-ssd2 portgroup=Management gw=10.114.221.129 mask=255.255.255.224 hostname=mgr
+
+[nsxcontrollers]
+nsx-controller01 ansible_ssh_host=10.114.221.143 ansible_ssh_user=root ansible_ssh_pass=VMware1! dc=Datacenter cluster=Management datastore=dl36-ssd2 portgroup=Management gw=10.114.221.129 mask=255.255.255.224 hostname=ctrl1
+nsx-controller02 ansible_ssh_host=10.114.221.144 ansible_ssh_user=root ansible_ssh_pass=VMware1! dc=Datacenter cluster=Management datastore=dl36-ssd2 portgroup=Management gw=10.114.221.129 mask=255.255.255.224 hostname=ctrl2
+nsx-controller03 ansible_ssh_host=10.114.221.145 ansible_ssh_user=root ansible_ssh_pass=VMware1! dc=Datacenter cluster=Management datastore=dl36-ssd2 portgroup=Management gw=10.114.221.129 mask=255.255.255.224 hostname=ctrl2
+
+[nsxedges]
+edge1 ansible_ssh_host=10.114.221.146 ansible_ssh_user=root ansible_ssh_pass=VMware1! dc=Datacenter cluster=Management datastore=dl36-ssd2 portgroup=Management gw=10.114.221.129 mask=255.255.255.224 hostname=edge1 portgroupExt=Uplink portgroupTransport=Transport
+edge2 ansible_ssh_host=10.114.221.147 ansible_ssh_user=root ansible_ssh_pass=VMware1! dc=Datacenter cluster=Management datastore=dl36-ssd2 portgroup=Management gw=10.114.221.129 mask=255.255.255.224 hostname=edge2 portgroupExt=Uplink portgroupTransport=Transport
+
+[esxis]
+esxi1 ansible_ssh_host=10.114.221.151 ansible_ssh_user=root ansible_ssh_pass=VMware1! dc=Datacenter cluster=Management datastore=dl36-ssd2 portgroup=Management gw=10.114.221.129 mask=255.255.255.224 hostname=esxi1 portgroup=Management portgroup_transport=Transport
+esxi2 ansible_ssh_host=10.114.221.152 ansible_ssh_user=root ansible_ssh_pass=VMware1! dc=Datacenter cluster=Management datastore=dl36-ssd2 portgroup=Management gw=10.114.221.129 mask=255.255.255.224 hostname=esxi2 portgroup=Management portgroup_transport=Transport
+esxi3 ansible_ssh_host=10.114.221.153 ansible_ssh_user=root ansible_ssh_pass=VMware1! dc=Datacenter cluster=Management datastore=dl36-ssd2 portgroup=Management gw=10.114.221.129 mask=255.255.255.224 hostname=esxi3 portgroup=Management portgroup_transport=Transport
+esxi4 ansible_ssh_host=10.114.221.154 ansible_ssh_user=root ansible_ssh_pass=VMware1! dc=Datacenter cluster=Management datastore=dl36-ssd2 portgroup=Management gw=10.114.221.129 mask=255.255.255.224 hostname=esxi4 portgroup=Management portgroup_transport=Transport
+
+[vcsas]
+vcsa vcsa_deploy='/home/ftallet/Downloads/vcsa-cli-installer/lin64/vcsa-deploy' portgroup=Management datastore=dl36-ssd2 dc=Datacenter cluster=Management ansible_ssh_host=10.114.221.141 prefix=27 gw=10.114.221.129 ansible_ssh_pass=VMware1! siteName=lab
+
+[localhost:vars]
+ovfToolPath='/usr/bin'
+nsxOvaPath='/home/ftallet/Downloads'
+#'/mnt/c/Users/ftall/Downloads'
+sshEnabled='True'
+allowSSHRootAccess='True'
+managerOva='nsx-unified-appliance-2.2.0.0.0.8448785.ova'
+controllerOva='nsx-controller-2.2.0.0.0.8448202.ova'
+edgeOva='nsx-edge-2.2.0.0.0.8448787.ova'
+esxiOva='myESX.ova'
+vcsaOva='VMware-vCenter-Server-Appliance-6.5.0.20000-8307201_OVF10.ova'
+
+deployVcIPAddress='10.114.221.142'
+deployVcUser='administrator@ft.lab'
+deployVcPassword='VMware1!'
+compute_manager='vCenter'
+cm_cluster='Compute'
+uplink-1=vmnic3
+uplink-2=vmnic4
+
+dns_server="10.114.221.134"
+dns_domain="ft.lab"
+ntp_server="ntp1.eng.vmware.com"
+
+
+tag_scope="ncp/cluster"
+tag="k8s-cluster12"
+overlay_tz_name="oTZ"
+vlan_tz_name="vTZ"
+edge_vlan_tz_name="e1TZ"
+hostswitch="o-nvds"
+vlan_hostswitch="v-nvds"
+
+tep_pool_name="tep-pool"
+tep_pool_cidr="192.168.1.0/24"
+tep_pool_range="192.168.1.151-192.168.1.159"
+tep_pool_nameserver="10.114.221.134"
+tep_pool_suffix="ft.lab"
+tep_pool_gw="192.168.1.1"
+
+edge_uplink_profile_name="edge-uplink-profile"
+edge_uplink_profile_mtu=1600
+edge_uplink_profile_vlan=0
+edge_interface="fp-eth1"
+edge_uplink_interface="fp-eth2"
+
+esxi_uplink_profile_name="esxi-uplink-profile"
+esxi_uplink_profile_mtu=1600
+esxi_uplink_profile_vlan=20
+
+edge_cluster="Edge Cluster"
+
+t0_name="DefaultT0Router"
+t0_ha_mode="ACTIVE_STANDBY"
+t0_vlan_uplink='0'
+t0_ip1='10.29.12.216/27'
+t0_ip2='10.29.12.217/27'
+t0_vip='10.29.12.218/27'
+t0_gw='10.29.12.193'
+
+t1_name="MngmtT1Router"
+t1_ip=["192.168.10.1"]
+t1_mask=24
+
+vlan_ls_mgmt="307"
+vlan_ls_vmotion="1078"
+vlan_ls_vsan="1079"
+
+ls_name="MngmtLS"
+
+ip_block_name="k8s-pod-nw-ip-block"
+ip_block_cidr="10.4.0.0/16"
+
+
+
+
